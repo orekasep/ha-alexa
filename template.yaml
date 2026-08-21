@@ -224,6 +224,22 @@ Resources:
           - Authorization
         MaxAge: 86400
 
+  AlexaOAuthFunctionInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AlexaOAuthFunction
+      Action: lambda:InvokeFunction
+      Principal: "*"
+      InvokedViaFunctionUrl: true
+
+  AlexaAuthorizeFunctionInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AlexaAuthorizeFunction
+      Action: lambda:InvokeFunction
+      Principal: "*"
+      InvokedViaFunctionUrl: true
+
   AlexaOAuthFunctionUrlPermission:
     Type: AWS::Lambda::Permission
     Properties:
