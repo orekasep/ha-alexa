@@ -141,10 +141,28 @@ The script will:
 3. **Deploy** the CloudFormation stack with `sam deploy`
 4. **Display** the function URLs you need for Alexa configuration
 
-**View deployment outputs:**
+**Required: record the deployment outputs**
+
+After deployment completes, run the following command to retrieve the Lambda
+function URLs and ARN required by the Alexa Developer Console:
+
 ```bash
-sam list stack-outputs --stack-name ha-alexa
+sam list stack-outputs --stack-name ha-alexa --region us-east-1
 ```
+
+Note the `OutputValue` for each of these `OutputKey` entries:
+
+| Output key | Where to use it |
+| --- | --- |
+| `AlexaSmartHomeFunctionArn` | Alexa Smart Home API **Default Endpoint** |
+| `AlexaAuthorizeFunctionUrlOutput` | Account Linking **Authorization URI** |
+| `AlexaOAuthFunctionUrl` | Account Linking **Access Token URI** |
+
+Copy each value exactly as displayed, including the trailing `/` on the two
+function URLs. Keep these values available for the
+[Configure Alexa Skill](#configure-alexa-skill) steps below. The function-name
+outputs are useful for troubleshooting, but they are not entered as Alexa
+endpoints.
 
 **To delete everything:**
 ```bash
@@ -234,6 +252,8 @@ In Cloudflare Zero Trust dashboard:
 3. Note the **Skill ID** (starts with `amzn1.ask.skill.`)
 
 ### 2. Configure Smart Home API
+
+Use the values recorded from `sam list stack-outputs` at the end of deployment.
 
 - **Default Endpoint**: Your `AlexaSmartHomeFunctionArn` from SAM deployment
 - **Payload version**: v3
